@@ -11,13 +11,7 @@ jobs:
   build:
     name: ✨Auto Deploy✨
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        targetPlatform:
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
-          - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - WebGL # WebGL.
+
     steps:
       # Checkout
       - name: Checkout repository
