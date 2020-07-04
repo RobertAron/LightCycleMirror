@@ -8,10 +8,6 @@ public class GameRoundManager : MonoBehaviour
     Dictionary<NetworkConnection, PlayerInputManager> connectedPlayers = new Dictionary<NetworkConnection, PlayerInputManager>();
     List<GameObject> currentPlayers = new List<GameObject>();
 
-    void Start(){
-        Debug.Log("GAME STARTED");
-    }
-
     public void AddPlayer(NetworkConnection networkConnection, PlayerInputManager playerInputManager){
         connectedPlayers.Add(networkConnection,playerInputManager);
         if(currentPlayers.Count==0) StartGame();

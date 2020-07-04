@@ -33,8 +33,6 @@ public class CustomNetworkManager : NetworkManager
     public override void Start()
     {
         base.Start();
-        Debug.Log("???");
-        Debug.Log(isHeadless);
     }
 
     /// <summary>

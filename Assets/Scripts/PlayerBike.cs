@@ -9,7 +9,7 @@ public delegate void MultiDelegate(GameObject gameObject);
 public class PlayerBike : NetworkBehaviour
 {
     public MultiDelegate onDestory;
-    [SerializeField] float speed;
+    [SerializeField] float speed = default;
     [SyncVar] Vector3 currentDirection = Vector3.forward;
     [SyncVar] Vector3 lastTurnOrigin = new Vector3(0,0,0);
     [SyncVar] double movementTime = NetworkTime.time;
