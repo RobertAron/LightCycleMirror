@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    name: Build ✨🔨
+    name: ✨Auto Deploy✨
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -32,11 +32,24 @@ jobs:
           key: Library
 
       # Build
-      - name: Build for ${{matrix.targetPlatform}}
+      - name: 🔨Windows
         uses: webbertakken/unity-builder@v0.10
         with:
             unityVersion: 2019.3.11f1
-            targetPlatform: ${{matrix.targetPlatform}}
+            targetPlatform: StandaloneWindows64
+      # Build
+      - name: 🔨Linux
+        uses: webbertakken/unity-builder@v0.10
+        with:
+            unityVersion: 2019.3.11f1
+            targetPlatform: StandaloneLinux64
+            
+      # Build
+      # - name: 🔨Web
+      #   uses: webbertakken/unity-builder@v0.10
+      #   with:
+      #       unityVersion: 2019.3.11f1
+      #       targetPlatform: WebGL
 
       # Output 
       - name: 💾Save
