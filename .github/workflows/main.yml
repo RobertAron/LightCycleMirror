@@ -44,7 +44,8 @@ jobs:
           username: _json_key
           password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           registry: gcr.io
-          repository: light-bike-unity/game-server
+          # ${projectid}/image
+          repository: lightbikeunity/game-server
           tags: latest
       # Output 
       - uses: actions/upload-artifact@v1
