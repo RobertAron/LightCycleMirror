@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    name: Build my project ✨
+    name: Build ✨🔨
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -39,7 +39,17 @@ jobs:
             targetPlatform: ${{matrix.targetPlatform}}
 
       # Output 
-      - uses: actions/upload-artifact@v1
+      - name: 💾Save
+        uses: actions/upload-artifact@v1
         with:
             name: Build
             path: build
+      
+      - name: Push to google reg
+        uses: docker/build-push-action@v1
+        with:
+          username: _json_key
+          password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          registry: gcr.io
+          repository: light-bike-unity/game-server
+          tags: latest
