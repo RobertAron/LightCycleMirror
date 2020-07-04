@@ -2,5 +2,5 @@ FROM ubuntu:20.10
 EXPOSE 80
 RUN 'mkdir' '/game'
 WORKDIR /game
-COPY /StandaloneLinux64/ .
+COPY build/StandaloneLinux64/ .
 ENTRYPOINT [ "./StandaloneLinux64","-batchmode","-nographics"]
