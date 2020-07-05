@@ -40,7 +40,7 @@ jobs:
 
       - uses: actions/upload-artifact@v1
         with:
-            name: Build
+            name: build
             path: build
   deploy:
     name: ✨ Build & Push Docker ✨
@@ -48,7 +48,7 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v2
-      # - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v2
       - name: Push to google reg
         uses: docker/build-push-action@v1
         with:
