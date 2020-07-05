@@ -1,18 +1,17 @@
 provider "google-beta" {
 
-  project = "lightbikenode"
+  project = "lightbikeunity"
   region  = "us-central1"
   zone    = "us-central1-a"
 }
 
-variable "version" {
+variable "tag" {
     type = string
     description = "tag to deploy"
-    required = true
 }
 
 module "auto-single-lb" {
   source = "git::github.com/RobertAron/SingleServerGcloud?ref=v0.1"
-  image  = "gcr.io/lightbikeunity/game-server:${version}"
+  image  = "gcr.io/lightbikeunity/game-server:${var.tag}"
   domain = "unity.bike.robertaron.io"
 }
