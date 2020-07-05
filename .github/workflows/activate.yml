@@ -5,7 +5,10 @@
 
 
 name: Acquire activation file
-on: [create, push]
+on:
+  create:
+    tags:
+      - unity-activate
 jobs:
   activation:
     name: Request manual activation file 🔑
