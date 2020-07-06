@@ -4,7 +4,7 @@
 
 
 
-name: Acquire activation file
+name: 🔑Unity Activation File
 on:
   create:
     tags:

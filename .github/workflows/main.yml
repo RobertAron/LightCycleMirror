@@ -1,4 +1,4 @@
-name: Actions 😎
+name: 🔨Build & Deploy🔨
 
 on:
   pull_request: {}
@@ -9,15 +9,15 @@ env:
 
 jobs:
   build:
-    name: 🔨Build 🔨
+    name: 🔨Builds🔨
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         targetPlatform:
-          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          # - StandaloneWindows64 # Build a Windows 64-bit standalone.
           - StandaloneLinux64 # Build a Linux 64-bit standalone.
-          - WebGL # WebGL.
+          # - WebGL # WebGL.
     steps:
       # Checkout
       - name: Checkout repository
@@ -42,6 +42,19 @@ jobs:
         with:
             name: build
             path: build
+  publish-app-engine:
+    name: 🐱‍🏍 Gcloud deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+      - id: deploy
+        uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
+        with:
+          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      # Example of using the output
+      - id: output-url
+        run: curl "${{ steps.deploy.outputs.url }}"
   # push-docker:
   #   name: ✨ Build & Push Docker ✨
   #   runs-on: ubuntu-latest
