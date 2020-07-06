@@ -493,9 +493,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1147071641}
-  - component: {fileID: 1147071639}
   - component: {fileID: 1147071640}
   - component: {fileID: 1147071642}
+  - component: {fileID: 1147071639}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -539,7 +539,7 @@ MonoBehaviour:
   OnServerDisconnected:
     m_PersistentCalls:
       m_Calls: []
-  port: 8080
+  port: 7778
   NoDelay: 1
   Secure: 0
   CertificatePath: 
@@ -576,6 +576,10 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 1587505827932888495, guid: 6dd54bed446ff5a47aff1b3b4bfa700b, type: 3}
   gameRoundManager: {fileID: 1625481723}
+  clientTransport: {fileID: 3453896856387006147, guid: 8218722dd51e1c44896ff4f0d9b7548f,
+    type: 3}
+  serverTransport: {fileID: 1900078649353996068, guid: c241bf72d108db446802c180ebffbbd7,
+    type: 3}
 --- !u!4 &1147071641
 Transform:
   m_ObjectHideFlags: 0
@@ -785,7 +789,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625481721}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbcab8a6d6b296e44b2a17c5cb326727, type: 3}
   m_Name: 

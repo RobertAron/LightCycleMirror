@@ -10,6 +10,8 @@ using System.Collections.Generic;
 public class CustomNetworkManager : NetworkManager
 {
     [SerializeField] GameRoundManager gameRoundManager = default;
+    [SerializeField] GameObject clientTransport = default;
+    [SerializeField] GameObject serverTransport = default;
     #region Unity Callbacks
 
     public override void OnValidate()
@@ -23,6 +25,14 @@ public class CustomNetworkManager : NetworkManager
     /// </summary>
     public override void Awake()
     {
+        if(Application.platform == RuntimePlatform.WebGLPlayer){
+            var go = Instantiate(clientTransport);
+            transport = go.GetComponent<MultiplexTransport>();
+        }
+        if(Application.platform == RuntimePlatform.LinuxPlayer){
+            var go = Instantiate(serverTransport);
+            transport = go.GetComponent<MultiplexTransport>();
+        }
         base.Awake();
     }
 
@@ -149,7 +159,6 @@ public class CustomNetworkManager : NetworkManager
     {
         var player = Instantiate(playerPrefab);
         var pim = player.GetComponent<PlayerInputManager>();
-        Debug.Log(pim);
         NetworkServer.AddPlayerForConnection(conn, player);
         gameRoundManager.AddPlayer(conn,pim);
     }
