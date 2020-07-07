@@ -44,6 +44,7 @@ jobs:
       # Checkout
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
+      - run: ls
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
