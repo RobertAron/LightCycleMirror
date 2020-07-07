@@ -46,13 +46,11 @@ jobs:
       - uses: actions/download-artifact@v2
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          version: '290.0.1'
-          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-      - id: deploy
-        uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
-        with:
           project_id: lightbikeunity
+      - run: gcloud info
+      - uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
       # Example of using the output
       - id: output-url
         run: curl "${{ steps.deploy.outputs.url }}"
