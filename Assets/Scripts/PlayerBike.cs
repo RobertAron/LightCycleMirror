@@ -19,6 +19,7 @@ public class PlayerBike : NetworkBehaviour
     }
 
     public void ChangeDirection(Vector3 direction){
+        direction *= -1;
         lastTurnOrigin = transform.position;
         movementTime = NetworkTime.time;
         currentDirection = direction;

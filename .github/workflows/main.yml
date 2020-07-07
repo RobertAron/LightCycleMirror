@@ -51,7 +51,8 @@ jobs:
           export_default_credentials: true
           project_id: lightbikeunity
       - run: gcloud info
-      - uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
+      - id: deploy
+        uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
       # Example of using the output
       - id: output-url
         run: curl "${{ steps.deploy.outputs.url }}"
