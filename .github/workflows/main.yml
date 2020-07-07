@@ -19,18 +19,12 @@ jobs:
           - StandaloneLinux64 # Build a Linux 64-bit standalone.
           # - WebGL # WebGL.
     steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          lfs: true
-    
+      - uses: actions/checkout@v2
       # Cache
       - uses: actions/cache@v1.1.0
         with:
           path: Library
           key: Library
-
       # Build
       - name: Build for ${{matrix.targetPlatform}}
         uses: webbertakken/unity-builder@v0.10
@@ -47,11 +41,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      # Checkout
+      - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '290.0.1'
+          service_account_key: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          export_default_credentials: true
       - id: deploy
         uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
         with:
-          credentials: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+          project_id: lightbikeunity
       # Example of using the output
       - id: output-url
         run: curl "${{ steps.deploy.outputs.url }}"
