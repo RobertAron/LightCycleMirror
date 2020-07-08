@@ -539,7 +539,7 @@ MonoBehaviour:
   OnServerDisconnected:
     m_PersistentCalls:
       m_Calls: []
-  port: 7778
+  port: 80
   NoDelay: 1
   Secure: 0
   CertificatePath: 
