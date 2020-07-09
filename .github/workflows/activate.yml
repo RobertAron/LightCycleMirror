@@ -6,9 +6,8 @@
 
 name: 🔑Unity Activation File
 on:
-  create:
-    tags:
-      - unity-activate
+  workflow_dispatch:
+      
 jobs:
   activation:
     name: Request manual activation file 🔑

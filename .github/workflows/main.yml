@@ -53,21 +53,14 @@ jobs:
       - id: deploy
         uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
       # Example of using the output
-      - run: curl "${{ steps.deploy.outputs.url }}"
-  # push-docker:
-  #   name: ✨ GH Pages Deploy
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/download-artifact@v2
-  #     - name: Push to google reg
-  #       uses: docker/build-push-action@v1
-  #       with:
-  #         username: _json_key
-  #         password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-  #         registry: gcr.io
-  #         # ${projectid}/image
-  #         repository: lightbikeunity/game-server
-  #         tag_with_ref: true
+  publish-gh-pages:
+    name: ✨ GH Pages Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/WebGL
 
