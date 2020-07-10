@@ -36,8 +36,6 @@ public class CustomNetworkManager : NetworkManager
             var go = Instantiate(serverTransport);
             transport = go.GetComponent<MultiplexTransport>();
         }
-        Debug.Log("Transport Selected");
-        Debug.Log(transport.name);
         base.Awake();
     }
 
@@ -48,6 +46,7 @@ public class CustomNetworkManager : NetworkManager
     public override void Start()
     {
         base.Start();
+        if(Application.platform == RuntimePlatform.WebGLPlayer) StartClient();
     }
 
     /// <summary>
