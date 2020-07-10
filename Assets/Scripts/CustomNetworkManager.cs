@@ -10,7 +10,8 @@ using System.Collections.Generic;
 public class CustomNetworkManager : NetworkManager
 {
     [SerializeField] GameRoundManager gameRoundManager = default;
-    [SerializeField] GameObject clientTransport = default;
+    [SerializeField] GameObject clienthttpsTransport = default;
+    [SerializeField] GameObject clienthttpTransport = default;
     [SerializeField] GameObject serverTransport = default;
     #region Unity Callbacks
 
@@ -26,13 +27,17 @@ public class CustomNetworkManager : NetworkManager
     public override void Awake()
     {
         if(Application.platform == RuntimePlatform.WebGLPlayer){
-            var go = Instantiate(clientTransport);
+            var go = GetURL.GetURLFromPage().Contains("https") ?
+                Instantiate(clienthttpsTransport):
+                Instantiate(clienthttpTransport);
             transport = go.GetComponent<MultiplexTransport>();
         }
         if(Application.platform == RuntimePlatform.LinuxPlayer){
             var go = Instantiate(serverTransport);
             transport = go.GetComponent<MultiplexTransport>();
         }
+        Debug.Log("Transport Selected");
+        Debug.Log(transport.name);
         base.Awake();
     }
 

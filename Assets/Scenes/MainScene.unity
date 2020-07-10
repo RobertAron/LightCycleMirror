@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -576,7 +576,9 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 1587505827932888495, guid: 6dd54bed446ff5a47aff1b3b4bfa700b, type: 3}
   gameRoundManager: {fileID: 1625481723}
-  clientTransport: {fileID: 3453896856387006147, guid: 8218722dd51e1c44896ff4f0d9b7548f,
+  clienthttpsTransport: {fileID: 3453896856387006147, guid: 8218722dd51e1c44896ff4f0d9b7548f,
+    type: 3}
+  clienthttpTransport: {fileID: 3453896856387006147, guid: 401862501535079409fe1ad91db135bf,
     type: 3}
   serverTransport: {fileID: 1900078649353996068, guid: c241bf72d108db446802c180ebffbbd7,
     type: 3}

@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 3453896856387006151}
   - component: {fileID: 3453896856387006150}
   - component: {fileID: 3453896856387006145}
-  - component: {fileID: 3453896856387006144}
   m_Layer: 0
-  m_Name: ClientTransport
+  m_Name: ClientHttpTransport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +70,6 @@ MonoBehaviour:
       m_Calls: []
   transports:
   - {fileID: 3453896856387006145}
-  - {fileID: 3453896856387006144}
 --- !u!114 &3453896856387006145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,46 +109,5 @@ MonoBehaviour:
   port: 80
   NoDelay: 1
   Secure: 0
-  CertificatePath: 
-  CertificatePassword: 
---- !u!114 &3453896856387006144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3453896856387006147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f039183eda8945448b822a77e2a9d0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnClientConnected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnClientDataReceived:
-    m_PersistentCalls:
-      m_Calls: []
-  OnClientError:
-    m_PersistentCalls:
-      m_Calls: []
-  OnClientDisconnected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerConnected:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerDataReceived:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerError:
-    m_PersistentCalls:
-      m_Calls: []
-  OnServerDisconnected:
-    m_PersistentCalls:
-      m_Calls: []
-  port: 443
-  NoDelay: 1
-  Secure: 1
   CertificatePath: 
   CertificatePassword: 
