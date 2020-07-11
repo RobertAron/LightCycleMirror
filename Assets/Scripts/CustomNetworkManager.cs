@@ -27,6 +27,8 @@ public class CustomNetworkManager : NetworkManager
     public override void Awake()
     {
         if(Application.platform == RuntimePlatform.WebGLPlayer){
+            var hud = GetComponent<Mirror.NetworkManagerHUD>();
+            hud.showGUI = false;
             var go = GetURL.GetURLFromPage().Contains("https") ?
                 Instantiate(clienthttpsTransport):
                 Instantiate(clienthttpTransport);
