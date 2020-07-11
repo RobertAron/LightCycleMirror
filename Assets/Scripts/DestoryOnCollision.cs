@@ -9,7 +9,7 @@ public class DestoryOnCollision : NetworkBehaviour
 {
     [SerializeField] bool runOnEnter = true;
     [SerializeField] bool runOnExit = false;
-    [SerializeField] List<MonoScript> activationTypes = default;
+    [SerializeField] List<string> activationTypes = default;
 
     private void OnTriggerEnter(Collider other) {
         if(runOnEnter) DestoryOnMatch(other.gameObject);
@@ -22,12 +22,7 @@ public class DestoryOnCollision : NetworkBehaviour
 
     public void DestoryOnMatch(GameObject gameObject){
         var pb = gameObject.GetComponent<PlayerBike>();
-        bool match = activationTypes
-            .ConvertAll(script => script.GetClass())
-            .Any(c => gameObject.GetComponent(c)!=null);
-
-        // activationTypes
-        //     .ConvertAll(script => script.GetClass()).ForEach(c => Debug.Log(c));
+        bool match = activationTypes.Any(c => gameObject.GetComponent(c)!=null);
         if(match) Destroy(gameObject);
     }
 }

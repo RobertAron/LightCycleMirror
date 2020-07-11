@@ -108,7 +108,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  onEnter: 1
-  onExit: 0
+  runOnEnter: 1
+  runOnExit: 0
   activationTypes:
-  - {fileID: 11500000, guid: c59df627fad5602429c0fd2557441b58, type: 3}
+  - PlayerBike
