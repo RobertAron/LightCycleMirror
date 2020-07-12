@@ -5,18 +5,14 @@ using Mirror;
 
 public class PlayerInputManager : NetworkBehaviour {
     BikeMovementController bikeMovementController;
-    ColorController colorController {
-        set { if (isLocalPlayer) value.color = Color.green; }
+    [SyncVar(hook=nameof(PlayerBikeHook))] GameObject playerBike;
+    void PlayerBikeHook(GameObject _, GameObject gameObject){
+        bikeMovementController = gameObject.GetComponent<BikeMovementController>();
+        if(isLocalPlayer) gameObject.GetComponent<ColorController>().color = Color.green;
     }
-
-    GameObject _playerBike;
-    public GameObject playerBike {
-        set {
-            _playerBike = value;
-            bikeMovementController = value.GetComponent<BikeMovementController>();
-            colorController = value.GetComponent<ColorController>();
-        }
-        get { return _playerBike; }
+    public void SetPlayerBike(GameObject gameObject){
+        playerBike = gameObject;
+        PlayerBikeHook(null,gameObject);
     }
 
     // Update is called once per frame

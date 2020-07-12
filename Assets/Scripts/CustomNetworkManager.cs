@@ -164,6 +164,8 @@ public class CustomNetworkManager : NetworkManager {
     /// <param name="conn">Connection from client.</param>
     public override void OnServerDisconnect(NetworkConnection conn) {
         base.OnServerDisconnect(conn);
+        NetworkServer.RemovePlayerForConnection(conn,true);
+        gameRoundManager.RemovePlayer(conn);
     }
 
     /// <summary>

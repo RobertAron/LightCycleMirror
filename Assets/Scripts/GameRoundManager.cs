@@ -33,7 +33,7 @@ public class GameRoundManager : MonoBehaviour {
             var playerBike = newPlayer.GetComponent<BikeMovementController>();
             playerBike.onDestory += OnPlayerOut;
             NetworkServer.Spawn(newPlayer);
-            entry.Value.playerBike = newPlayer;
+            entry.Value.SetPlayerBike(newPlayer);
             currentPlayers.Add(newPlayer);
         }
     }

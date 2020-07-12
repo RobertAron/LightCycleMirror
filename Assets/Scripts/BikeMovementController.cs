@@ -11,9 +11,10 @@ public class BikeMovementController : NetworkBehaviour {
     [SerializeField] float speed = default;
     [SyncVar] Vector3 currentDirection = Vector3.forward;
     [SyncVar] Vector3 lastTurnOrigin;
-    [SyncVar] double movementTime = NetworkTime.time;
+    [SerializeField][SyncVar] double movementTime;
 
-    void Awake() {
+    public override void OnStartServer() {
+        movementTime = NetworkTime.time;
         lastTurnOrigin = transform.position;
     }
 
