@@ -7,16 +7,14 @@ using System.Collections.Generic;
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 */
 
-public class CustomNetworkManager : NetworkManager
-{
+public class CustomNetworkManager : NetworkManager {
     [SerializeField] GameRoundManager gameRoundManager = default;
     [SerializeField] GameObject clienthttpsTransport = default;
     [SerializeField] GameObject clienthttpTransport = default;
     [SerializeField] GameObject serverTransport = default;
     #region Unity Callbacks
 
-    public override void OnValidate()
-    {
+    public override void OnValidate() {
         base.OnValidate();
     }
 
@@ -24,17 +22,16 @@ public class CustomNetworkManager : NetworkManager
     /// Runs on both Server and Client
     /// Networking is NOT initialized when this fires
     /// </summary>
-    public override void Awake()
-    {
-        if(Application.platform == RuntimePlatform.WebGLPlayer){
+    public override void Awake() {
+        if (Application.platform == RuntimePlatform.WebGLPlayer) {
             var hud = GetComponent<Mirror.NetworkManagerHUD>();
             hud.showGUI = false;
             var go = GetURL.GetURLFromPage().Contains("https") ?
-                Instantiate(clienthttpsTransport):
+                Instantiate(clienthttpsTransport) :
                 Instantiate(clienthttpTransport);
             transport = go.GetComponent<MultiplexTransport>();
         }
-        if(Application.platform == RuntimePlatform.LinuxPlayer){
+        if (Application.platform == RuntimePlatform.LinuxPlayer) {
             var go = Instantiate(serverTransport);
             transport = go.GetComponent<MultiplexTransport>();
         }
@@ -45,25 +42,22 @@ public class CustomNetworkManager : NetworkManager
     /// Runs on both Server and Client
     /// Networking is NOT initialized when this fires
     /// </summary>
-    public override void Start()
-    {
+    public override void Start() {
         base.Start();
-        if(Application.platform == RuntimePlatform.WebGLPlayer) StartClient();
+        if (Application.platform == RuntimePlatform.WebGLPlayer) StartClient();
     }
 
     /// <summary>
     /// Runs on both Server and Client
     /// </summary>
-    public override void LateUpdate()
-    {
+    public override void LateUpdate() {
         base.LateUpdate();
     }
 
     /// <summary>
     /// Runs on both Server and Client
     /// </summary>
-    public override void OnDestroy()
-    {
+    public override void OnDestroy() {
         base.OnDestroy();
     }
 
@@ -75,16 +69,14 @@ public class CustomNetworkManager : NetworkManager
     /// Set the frame rate for a headless server.
     /// <para>Override if you wish to disable the behavior or set your own tick rate.</para>
     /// </summary>
-    public override void ConfigureServerFrameRate()
-    {
+    public override void ConfigureServerFrameRate() {
         base.ConfigureServerFrameRate();
     }
 
     /// <summary>
     /// called when quitting the application by closing the window / pressing stop in the editor
     /// </summary>
-    public override void OnApplicationQuit()
-    {
+    public override void OnApplicationQuit() {
         base.OnApplicationQuit();
     }
 
@@ -97,8 +89,7 @@ public class CustomNetworkManager : NetworkManager
     /// <para>Clients that connect to this server will automatically switch to this scene. This is called autmatically if onlineScene or offlineScene are set, but it can be called from user code to switch scenes again while the game is in progress. This automatically sets clients to be not-ready. The clients must call NetworkClient.Ready() again to participate in the new scene.</para>
     /// </summary>
     /// <param name="newSceneName"></param>
-    public override void ServerChangeScene(string newSceneName)
-    {
+    public override void ServerChangeScene(string newSceneName) {
         base.ServerChangeScene(newSceneName);
     }
 
@@ -129,8 +120,7 @@ public class CustomNetworkManager : NetworkManager
     /// <para>Scene changes can cause player objects to be destroyed. The default implementation of OnClientSceneChanged in the NetworkManager is to add a player object for the connection if no player object exists.</para>
     /// </summary>
     /// <param name="conn">The network connection that the scene change message arrived on.</param>
-    public override void OnClientSceneChanged(NetworkConnection conn)
-    {
+    public override void OnClientSceneChanged(NetworkConnection conn) {
         base.OnClientSceneChanged(conn);
     }
 
@@ -144,15 +134,14 @@ public class CustomNetworkManager : NetworkManager
     /// </summary>
     /// <param name="conn">Connection from client.</param>
     public override void OnServerConnect(NetworkConnection conn) {
-     }
+    }
 
     /// <summary>
     /// Called on the server when a client is ready.
     /// <para>The default implementation of this function calls NetworkServer.SetClientReady() to continue the network setup process.</para>
     /// </summary>
     /// <param name="conn">Connection from client.</param>
-    public override void OnServerReady(NetworkConnection conn)
-    {
+    public override void OnServerReady(NetworkConnection conn) {
         base.OnServerReady(conn);
     }
 
@@ -161,12 +150,11 @@ public class CustomNetworkManager : NetworkManager
     /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
     /// </summary>
     /// <param name="conn">Connection from client.</param>
-    public override void OnServerAddPlayer(NetworkConnection conn)
-    {
+    public override void OnServerAddPlayer(NetworkConnection conn) {
         var player = Instantiate(playerPrefab);
         var pim = player.GetComponent<PlayerInputManager>();
         NetworkServer.AddPlayerForConnection(conn, player);
-        gameRoundManager.AddPlayer(conn,pim);
+        gameRoundManager.AddPlayer(conn, pim);
     }
 
     /// <summary>
@@ -174,8 +162,7 @@ public class CustomNetworkManager : NetworkManager
     /// <para>This is called on the Server when a Client disconnects from the Server. Use an override to decide what should happen when a disconnection is detected.</para>
     /// </summary>
     /// <param name="conn">Connection from client.</param>
-    public override void OnServerDisconnect(NetworkConnection conn)
-    {
+    public override void OnServerDisconnect(NetworkConnection conn) {
         base.OnServerDisconnect(conn);
     }
 
@@ -195,8 +182,7 @@ public class CustomNetworkManager : NetworkManager
     /// <para>The default implementation of this function sets the client as ready and adds a player. Override the function to dictate what happens when the client connects.</para>
     /// </summary>
     /// <param name="conn">Connection to the server.</param>
-    public override void OnClientConnect(NetworkConnection conn)
-    {
+    public override void OnClientConnect(NetworkConnection conn) {
         base.OnClientConnect(conn);
     }
 
@@ -205,8 +191,7 @@ public class CustomNetworkManager : NetworkManager
     /// <para>This is called on the client when it disconnects from the server. Override this function to decide what happens when the client disconnects.</para>
     /// </summary>
     /// <param name="conn">Connection to the server.</param>
-    public override void OnClientDisconnect(NetworkConnection conn)
-    {
+    public override void OnClientDisconnect(NetworkConnection conn) {
         base.OnClientDisconnect(conn);
     }
 
@@ -247,8 +232,7 @@ public class CustomNetworkManager : NetworkManager
     /// <summary>
     /// This is invoked when the client is started.
     /// </summary>
-    public override void OnStartClient()
-    {
+    public override void OnStartClient() {
         base.OnStartClient();
     }
 

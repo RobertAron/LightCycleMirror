@@ -6,25 +6,28 @@ using Mirror;
 public delegate void MultiDelegate(GameObject gameObject);
 
 
-public class PlayerBike : NetworkBehaviour
-{
-    public MultiDelegate onDestory;
+public class BikeMovementController : NetworkBehaviour {
+    public MultiDelegate onDestory = default;
     [SerializeField] float speed = default;
     [SyncVar] Vector3 currentDirection = Vector3.forward;
-    [SyncVar] Vector3 lastTurnOrigin = new Vector3(0,0,0);
+    [SyncVar] Vector3 lastTurnOrigin;
     [SyncVar] double movementTime = NetworkTime.time;
 
-    void OnDestroy() {
-        if(onDestory!=null) onDestory(this.gameObject);
+    void Awake() {
+        lastTurnOrigin = transform.position;
     }
 
-    public void ChangeDirection(Vector3 direction){
+    void OnDestroy() {
+        if (onDestory != null) onDestory(this.gameObject);
+    }
+
+    public void ChangeDirection(Vector3 direction) {
         lastTurnOrigin = transform.position;
         movementTime = NetworkTime.time;
         currentDirection = direction;
     }
 
-    void Update(){
+    void Update() {
         float timeSinceLastTime = (float)(NetworkTime.time - movementTime);
         Vector3 offset = currentDirection * timeSinceLastTime * speed;
         transform.position = lastTurnOrigin + offset;
