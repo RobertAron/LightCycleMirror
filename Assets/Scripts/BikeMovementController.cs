@@ -4,18 +4,24 @@ using UnityEngine;
 using Mirror;
 
 public delegate void MultiDelegate(GameObject gameObject);
-
+struct BikeMovementPosition{
+    public BikeMovementPosition(Vector3 position,Vector3 direction){
+        this.position = position;
+        this.direction = direction;
+        this.time = NetworkTime.time;
+    }
+    public Vector3 position;
+    public Vector3 direction;
+    public double time;
+}
 
 public class BikeMovementController : NetworkBehaviour {
     public MultiDelegate onDestory = default;
     [SerializeField] float speed = default;
-    [SyncVar] Vector3 currentDirection = Vector3.forward;
-    [SyncVar] Vector3 lastTurnOrigin;
-    [SerializeField][SyncVar] double movementTime;
+    [SyncVar] BikeMovementPosition movementPosition;
 
     public override void OnStartServer() {
-        movementTime = NetworkTime.time;
-        lastTurnOrigin = transform.position;
+        movementPosition = new BikeMovementPosition(transform.position,transform.forward);
     }
 
     void OnDestroy() {
@@ -23,14 +29,12 @@ public class BikeMovementController : NetworkBehaviour {
     }
 
     public void ChangeDirection(Vector3 direction) {
-        lastTurnOrigin = transform.position;
-        movementTime = NetworkTime.time;
-        currentDirection = direction;
+        movementPosition = new BikeMovementPosition(transform.position,direction);
     }
 
     void Update() {
-        float timeSinceLastTime = (float)(NetworkTime.time - movementTime);
-        Vector3 offset = currentDirection * timeSinceLastTime * speed;
-        transform.position = lastTurnOrigin + offset;
+        float timeSinceLastTime = (float)(NetworkTime.time - movementPosition.time);
+        Vector3 offset = movementPosition.direction * timeSinceLastTime * speed;
+        transform.position = movementPosition.position + offset;
     }
 }
