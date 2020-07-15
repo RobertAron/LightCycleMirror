@@ -575,6 +575,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 1587505827932888495, guid: 6dd54bed446ff5a47aff1b3b4bfa700b, type: 3}
+  - {fileID: 2238689398291177855, guid: df556b1e81227434c86670fd1816c4ed, type: 3}
   gameRoundManager: {fileID: 1625481723}
   clienthttpsTransport: {fileID: 3453896856387006147, guid: 8218722dd51e1c44896ff4f0d9b7548f,
     type: 3}
