@@ -17,12 +17,17 @@ public class DestoryOnCollision : NetworkBehaviour {
         if (runOnExit) DestoryOnMatch(other.gameObject);
     }
 
-
+    [ServerCallback]
     public void DestoryOnMatch(GameObject gameObject) {
         var pb = gameObject.GetComponent<BikeMovementController>();
+        float minSize = Mathf.Min(
+            transform.localScale.x,
+            transform.localScale.y,
+            transform.localScale.z
+        );
         bool match = activationTypes
             .ConvertAll(activationType => activationType.name)
             .Any(cName => gameObject.GetComponent(cName) != null);
-        if (match) Destroy(gameObject);
+        if (match && minSize!=0) Destroy(gameObject);
     }
 }

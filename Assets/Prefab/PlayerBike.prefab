@@ -53,7 +53,7 @@ MonoBehaviour:
   speed: 5
   trailPrefab: {fileID: 2238689398291177855, guid: df556b1e81227434c86670fd1816c4ed,
     type: 3}
-  spawnOffset: {x: 0, y: 0, z: -0.500001}
+  spawnOffset: {x: 0, y: 0, z: -0.501}
 --- !u!114 &3752037816092085557
 MonoBehaviour:
   m_ObjectHideFlags: 0
