@@ -18,11 +18,11 @@ struct BikeMovementPosition{
 public class BikeMovementController : NetworkBehaviour, Attachable {
     public MultiDelegate onDestory = default;
     [SerializeField] float speed = default;
-    AttachedStretchable trail = default;
+    Beam trail = default;
     [SerializeField] GameObject trailPrefab = default;
     [SyncVar] BikeMovementPosition movementPosition;
-
-    public Vector3 attachpoint => transform.position;
+    [SerializeField] Vector3 spawnOffset = default;
+    public Vector3 attachpoint => transform.position + transform.rotation * spawnOffset;
 
     public override void OnStartServer() {
         movementPosition = new BikeMovementPosition(transform.position,transform.forward);
@@ -36,22 +36,30 @@ public class BikeMovementController : NetworkBehaviour, Attachable {
     [Server]
     public void ChangeDirection(Vector3 direction) {
         movementPosition = new BikeMovementPosition(transform.position,direction);
+        UpdatePosition();
         StartNewTrail();
     }
 
-    void Update() {
+    void UpdatePosition(){
         float timeSinceLastTime = (float)(NetworkTime.time - movementPosition.time);
         Vector3 offset = movementPosition.direction * timeSinceLastTime * speed;
         transform.position = movementPosition.position + offset;
+        transform.rotation = Quaternion.LookRotation(movementPosition.direction);
+    }
+
+    void Update() {
+        UpdatePosition();
     }
 
     [Server]
     void StartNewTrail(){
-        var newTrail = Instantiate(trailPrefab,transform.position,transform.rotation);
-        var attachedStretchable = newTrail.GetComponent<AttachedStretchable>();
-        attachedStretchable.attachedTo = gameObject;
+        var newTrail = Instantiate(trailPrefab,attachpoint,transform.rotation);
+        var beam = newTrail.GetComponent<Beam>();
+        beam.attachedTo = gameObject;
+        beam.spawnPosition = attachpoint;
         NetworkServer.Spawn(newTrail);
+        beam.Reposition();
         if(trail!=null) trail.attachedTo = newTrail;
-        trail = attachedStretchable;
+        trail = beam;
     }
 }

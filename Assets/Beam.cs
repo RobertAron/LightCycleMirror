@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-public class AttachedStretchable : NetworkBehaviour, Attachable {
-    Stretchable stretchable;
+public class Beam : NetworkBehaviour, Attachable {
+    [SerializeField] Stretchable stretchable = default;
+    public Vector3 spawnPosition = Vector3.zero;
     [SyncVar] GameObject _attachedTo;
     public GameObject attachedTo {
         set => _attachedTo = value;
@@ -11,22 +12,20 @@ public class AttachedStretchable : NetworkBehaviour, Attachable {
     }
 
     public Vector3 attachpoint { 
-        get {
-            if(stretchable) return stretchable.startPosition;
-            return transform.position;
-        }
+        get => stretchable.startPosition;
     }
 
-    // Start is called before the first frame update
-    void Start() {
-        Vector3 startPosition = transform.position;
-        stretchable = GetComponent<Stretchable>();
-        stretchable.startPosition = startPosition;
-        stretchable.endPosition = startPosition;
+    void Start(){
+        Update();
     }
 
     // Update is called once per frame
     void Update() {
+        Reposition();
+    }
+
+    public void Reposition(){
+        stretchable.startPosition = spawnPosition;
         if (attachedTo == null) return;
         Attachable attachable = attachedTo.GetComponent<Attachable>();
         if(attachable == null) return;

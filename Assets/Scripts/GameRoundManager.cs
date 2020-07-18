@@ -6,7 +6,6 @@ public class GameRoundManager : MonoBehaviour {
     [SerializeField] GameObject playerAvatar = default;
     Dictionary<NetworkConnection, PlayerInputManager> connectedPlayers = new Dictionary<NetworkConnection, PlayerInputManager>();
     List<GameObject> currentPlayers = new List<GameObject>();
-    [SerializeField] List<TextAsset> classesToClear = default;
 
 
     public void AddPlayer(NetworkConnection networkConnection, PlayerInputManager playerInputManager) {
@@ -26,8 +25,7 @@ public class GameRoundManager : MonoBehaviour {
     bool startGameAvailable = true;
     public void StartGame() {
         if (!startGameAvailable) return;
-        Debug.Log(FindObjectsOfType<AttachedStretchable>());
-        foreach(var obj in FindObjectsOfType<AttachedStretchable>()){
+        foreach(var obj in FindObjectsOfType<Beam>()){
             Destroy(obj.gameObject);
         }
         foreach (var entry in connectedPlayers) {
