@@ -770,6 +770,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerAvatar: {fileID: 1587505827932888495, guid: 6dd54bed446ff5a47aff1b3b4bfa700b,
     type: 3}
+  board: {fileID: 559237489037980234}
 --- !u!4 &1625481724
 Transform:
   m_ObjectHideFlags: 0

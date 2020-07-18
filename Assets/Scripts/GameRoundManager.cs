@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 public class GameRoundManager : MonoBehaviour {
     [SerializeField] GameObject playerAvatar = default;
+    [SerializeField] GameObject board = default;
     Dictionary<NetworkConnection, PlayerInputManager> connectedPlayers = new Dictionary<NetworkConnection, PlayerInputManager>();
     List<GameObject> currentPlayers = new List<GameObject>();
 
@@ -29,10 +30,11 @@ public class GameRoundManager : MonoBehaviour {
             Destroy(obj.gameObject);
         }
         foreach (var entry in connectedPlayers) {
+            float maxSpawnPos = Mathf.Min(board.transform.localScale.x,board.transform.localScale.z)/2-1;
             var newPlayer = Instantiate(
                 playerAvatar,
-                new Vector3(0, 1, 0),
-                Quaternion.Euler(0, 0, 0)
+                new Vector3(Random.Range(-maxSpawnPos,maxSpawnPos), 1, Random.Range(-maxSpawnPos,maxSpawnPos)),
+                Quaternion.Euler(0, Random.Range(0,3) * 90f, 0)
             );
             var playerBike = newPlayer.GetComponent<BikeMovementController>();
             playerBike.onDestory += OnPlayerOut;
