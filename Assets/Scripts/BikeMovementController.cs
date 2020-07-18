@@ -29,6 +29,7 @@ public class BikeMovementController : NetworkBehaviour, Attachable {
         StartNewTrail(Vector3.zero);
     }
 
+    [ServerCallback]
     void OnDestroy() {
         if (onDestory != null) onDestory(this.gameObject);
     }
@@ -56,10 +57,7 @@ public class BikeMovementController : NetworkBehaviour, Attachable {
     void StartNewTrail(Vector3 offset){
         var newTrail = Instantiate(trailPrefab,attachpoint,transform.rotation);
         var beam = newTrail.GetComponent<Beam>();
-        beam.attachedTo = gameObject;
-        beam.spawnPosition = attachpoint;
-        beam.attachmentOffset = offset;
-        beam.Reposition();
+        beam.Init(gameObject,attachpoint,offset);
         NetworkServer.Spawn(newTrail);
         if(trail!=null) trail.attachedTo = newTrail;
         trail = beam;

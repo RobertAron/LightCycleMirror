@@ -16,6 +16,13 @@ public class Beam : NetworkBehaviour, Attachable {
         get => stretchable.startPosition + attachmentOffset;
     }
 
+    public void Init(GameObject attachedTo,Vector3 spawnPosition, Vector3 attachmentOffset ){
+        this.attachedTo = attachedTo;
+        this.spawnPosition = spawnPosition;
+        this.attachmentOffset = attachmentOffset;
+        Reposition();
+    }
+
     // Update is called once per frame
     void Update() {
         Reposition();
