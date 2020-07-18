@@ -26,7 +26,7 @@ public class BikeMovementController : NetworkBehaviour, Attachable {
 
     public override void OnStartServer() {
         movementPosition = new BikeMovementPosition(transform.position,transform.forward);
-        StartNewTrail();
+        StartNewTrail(Vector3.zero);
     }
 
     void OnDestroy() {
@@ -35,9 +35,10 @@ public class BikeMovementController : NetworkBehaviour, Attachable {
 
     [Server]
     public void ChangeDirection(Vector3 direction) {
+        Vector3 originalAttachmentPosition = attachpoint;
         movementPosition = new BikeMovementPosition(transform.position,direction);
         UpdatePosition();
-        StartNewTrail();
+        StartNewTrail(originalAttachmentPosition-attachpoint);
     }
 
     void UpdatePosition(){
@@ -52,13 +53,14 @@ public class BikeMovementController : NetworkBehaviour, Attachable {
     }
 
     [Server]
-    void StartNewTrail(){
+    void StartNewTrail(Vector3 offset){
         var newTrail = Instantiate(trailPrefab,attachpoint,transform.rotation);
         var beam = newTrail.GetComponent<Beam>();
         beam.attachedTo = gameObject;
         beam.spawnPosition = attachpoint;
-        NetworkServer.Spawn(newTrail);
+        beam.attachmentOffset = offset;
         beam.Reposition();
+        NetworkServer.Spawn(newTrail);
         if(trail!=null) trail.attachedTo = newTrail;
         trail = beam;
     }

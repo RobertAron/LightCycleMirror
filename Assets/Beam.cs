@@ -4,7 +4,8 @@ using UnityEngine;
 using Mirror;
 public class Beam : NetworkBehaviour, Attachable {
     [SerializeField] Stretchable stretchable = default;
-    public Vector3 spawnPosition = Vector3.zero;
+    [SyncVar] public Vector3 attachmentOffset = Vector3.zero;
+    [SyncVar] public Vector3 spawnPosition = Vector3.zero;
     [SyncVar] GameObject _attachedTo;
     public GameObject attachedTo {
         set => _attachedTo = value;
@@ -12,11 +13,7 @@ public class Beam : NetworkBehaviour, Attachable {
     }
 
     public Vector3 attachpoint { 
-        get => stretchable.startPosition;
-    }
-
-    void Start(){
-        Update();
+        get => stretchable.startPosition + attachmentOffset;
     }
 
     // Update is called once per frame
